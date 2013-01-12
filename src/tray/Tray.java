@@ -1,6 +1,6 @@
 package tray;
 
-import java.awt.AWTException;
+import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
@@ -9,18 +9,16 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.net.URI;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import user.Account;
 import user.AccountManager;
 import util.Logger;
 
 public class Tray {
 
-	public static final String DEFAULT_TOOLTIP = "OJMon";
-	
 	private static Tray _instance = new Tray();
 	private TrayIcon _trayIcon;
 	private Image _emptyIcon, _defaultIcon;
@@ -60,45 +58,65 @@ public class Tray {
 		_isFlickering = false;
 	}
 	
-	public void setTooltipText(String tooltip) {
-		_trayIcon.setToolTip(tooltip);
+	public void iconDisplayMessage(String title, String tooltip) {
+		_trayIcon.displayMessage(title, tooltip, TrayIcon.MessageType.INFO);
 	}
 	
-	public void initTray() {
-		
+	private MenuItem createExitMenu() {
+		MenuItem exitMenuItem = new MenuItem("Exit");
+		ActionListener menuListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		};
+		exitMenuItem.addActionListener(menuListener);
+		return exitMenuItem;
+	}
+	
+	private MenuItem createAccountBrowseMenu(final Account account) {
+		MenuItem accountMenuItem = new MenuItem(account.getAccountName());
+		ActionListener menuListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI(account.getAccountRecordFilePath()));
+				} catch (Exception ee) { 
+					Logger.printlnError(ee);
+				}
+			}
+		};
+		accountMenuItem.addActionListener(menuListener);
+		return accountMenuItem;		
+	}
+
+	public void initializeTray() {
 		_emptyIcon = Toolkit.getDefaultToolkit().getImage(Tray.class.getResource("/resource/empty.png")).getScaledInstance(16, 16, Image.SCALE_SMOOTH);
 		_defaultIcon = Toolkit.getDefaultToolkit().getImage(Tray.class.getResource("/resource/icon.png")).getScaledInstance(16, 16, Image.SCALE_SMOOTH);
-		if (SystemTray.isSupported()) {
+		if (SystemTray.isSupported() && Desktop.isDesktopSupported()) {
 			SystemTray tray = SystemTray.getSystemTray();
-			MenuItem defaultItem = new MenuItem("Exit");
+		
 			PopupMenu popup = new PopupMenu();
-			popup.add(defaultItem);
-			ActionListener menuListener = new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-	                 System.exit(0);
+			for (Account account : AccountManager.getInstance().getAllAccount()) {
+				popup.add(createAccountBrowseMenu(account));
+			}
+			popup.addSeparator();
+			popup.add(createExitMenu());
+	
+			ActionListener actionListener = new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					Tray.getInstance().stopFlickering();
+					AccountManager.getInstance().clearNewRecordFlag();	
 				}
 			};
-			defaultItem.addActionListener(menuListener);
-			
-			MouseListener iconListener = new MouseListener() {
-				public void mouseClicked(MouseEvent arg0) {
-					AccountManager.getInstance().onTrayMouseClicked();
-				}
-				public void mouseEntered(MouseEvent arg0) { }
-				public void mouseExited(MouseEvent arg0) { }
-				public void mousePressed(MouseEvent arg0) { }
-				public void mouseReleased(MouseEvent arg0) { }
-			};
-			_trayIcon = new TrayIcon(_defaultIcon, DEFAULT_TOOLTIP, popup);
-			_trayIcon.addMouseListener(iconListener);
+			_trayIcon = new TrayIcon(_defaultIcon, "OJMon", popup);
+			_trayIcon.addActionListener(actionListener);
 	        try {
 	        	tray.add(_trayIcon);
 	        	return;
-	        } catch (AWTException e) {
+	        } catch (Exception e) {
 	        	Logger.printlnError(e);
 	        }
 		} else {
-			Logger.printlnError(new Exception("System tray is not supported."));
+			Logger.printlnError(new Exception("System tray or desktop is not supported."));
 		}
 		System.exit(0);
 	}

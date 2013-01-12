@@ -55,10 +55,10 @@ public class HTMLLocalTextWriter {
 				+ submitTimeSession
 				+ "</tr>";
 	}
-
+	
 	public void writeToHTML() {
 		try {
-			String HTMLFileName = _bindAccount.getAccountName() + ".html";
+			String HTMLFileName = _bindAccount.getAccountRecordFilePath();
 			BufferedWriter _bufWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(HTMLFileName)), "utf-8"));
 			
 			_bufWriter.write(HTMLTopCode);

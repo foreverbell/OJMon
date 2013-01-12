@@ -11,6 +11,7 @@ public class AccountManager {
 
 	private static final int UPDATE_INTERVAL = 120000;
 	private static final AccountManager _instance = new AccountManager();
+	private boolean _isLocked = false;
 	
 	public static AccountManager getInstance() {
 		return _instance;
@@ -29,46 +30,39 @@ public class AccountManager {
 		return null;	
 	}
 	
-	public boolean destroyAccount(Account account) {
-		return _accountList.remove(account);
-	}
-	
-	public boolean destroyAccount(String accountName) {
-		Account account = getAccount(accountName);
-		if (account == null) return false;
-		return destroyAccount(account);
+	public Account [] getAllAccount() {
+		return _accountList.toArray(new Account[0]);
 	}
 
 	public Account createAccount(String accountName) {
+		// Creating an account after startMonitoring has been called is forbidden.
+		if (_isLocked) return null;
 		Account account = new Account(accountName);
 		if (!_accountList.add(account)) return null;
 		return account;
 	}
 	
-	/** TODO: those codes need to be refactored. */
-	private String generateTooltip() {
-		String tooltip = new String();
-		Iterator<Account> iter = _accountList.iterator();
-		while (iter.hasNext()) {
-			Account account = iter.next();
-			if (account.hasNewRecord()) {
-				tooltip += account.getAccountName() + " fetched " + Integer.valueOf(account.getNewRecordCnt()).toString() + " submission(s).\n";
-			}		
-		}	
-		return Tray.DEFAULT_TOOLTIP + "\n" + tooltip;
-	}
-	
-	public void onTrayMouseClicked() {
-		Tray.getInstance().stopFlickering();
-		Tray.getInstance().setTooltipText(Tray.DEFAULT_TOOLTIP);
+	public void clearNewRecordFlag() {
 		Iterator<Account> iter = _accountList.iterator();
 		while (iter.hasNext()) {
 			Account account = iter.next();
 			if (account.hasNewRecord()) account.clearNewRecordFlag();
 		}
 	}
-	
-	private AccountManager() { 
+
+	private String generateMessage() {
+		String message = new String();
+		Iterator<Account> iter = _accountList.iterator();
+		while (iter.hasNext()) {
+			Account account = iter.next();
+			if (account.hasNewRecord()) {
+				message += account.getAccountName() + " fetched " + Integer.valueOf(account.getNewRecordCnt()).toString() + " submission(s).\n";
+			}		
+		}
+		return message;
+	}
+
+	public void startMonitoring() {
 		TimerTask timerTaskInstance = new TimerTask() {
 			public void run() {
 				Iterator<Account> iter = _accountList.iterator();
@@ -80,14 +74,16 @@ public class AccountManager {
 					hasNewRecord |= account.hasNewRecord();
 				}
 				if (hasNewRecord) {
-					Tray.getInstance().setTooltipText(generateTooltip());
+					Tray.getInstance().iconDisplayMessage("New submissions fetched", generateMessage());
 					Tray.getInstance().startFlickering();
-				} else {
-					Tray.getInstance().setTooltipText(Tray.DEFAULT_TOOLTIP);
 				}
 			}
 		};
+		Tray.getInstance().initializeTray();
+		_isLocked = true;
 		Timer tmr = new Timer();
-		tmr.schedule(timerTaskInstance, 1000, UPDATE_INTERVAL);
+		tmr.schedule(timerTaskInstance, 0, UPDATE_INTERVAL);		
 	}
+	
+	private AccountManager() { }
 }

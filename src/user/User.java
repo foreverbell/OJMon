@@ -23,12 +23,12 @@ public class User implements INullable {
 	}
 	
 	public Record [] getAllRecord() {
-		return (Record[]) _userRecordList.toArray(new Record[0]);
+		return _userRecordList.toArray(new Record[0]);
 	}
 	
-	//public OJ getAttachedOJ() {
-	//	return _attachedOJ;
-	//}
+	public OJ getAttachedOJ() {
+		return _attachedOJ;
+	}
 	
 	public String getUserName() {
 		return _userName;

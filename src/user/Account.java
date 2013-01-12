@@ -16,17 +16,13 @@ public class Account {
 	public String getAccountName() {
 		return _accountName;
 	}
-	
-	public void setAccountName(String accountName) {
-		_accountName = accountName;
+
+	public String getAccountRecordFilePath() {
+		return getAccountName() + ".html";
 	}
 	
 	public User [] getAllUser() {
-		return (User[]) _userList.toArray(new User[0]);
-	}
-	
-	public boolean destroyUser(User user) {
-		return _userList.remove(user);
+		return _userList.toArray(new User[0]);
 	}
 
 	public User createUser(OJ attachedOJ, String userName) {
