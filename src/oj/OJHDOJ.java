@@ -72,7 +72,7 @@ public class OJHDOJ extends OJ {
 		return "http://acm.hdu.edu.cn/status.php?" + userSession + "&" + firstSession;
 	}
 
-	protected OJHDOJ() { 
+	public OJHDOJ() { 
 		_encoding = "gb2312";
 	}
 
