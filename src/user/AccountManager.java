@@ -50,6 +50,23 @@ public class AccountManager {
 		}
 	}
 
+	public void updateAll(boolean isForceShowMessage) {
+		Iterator<Account> iter = _accountList.iterator();
+		boolean hasNewRecord = false;
+		while (iter.hasNext()) {
+			Account account = iter.next();
+			account.updateAll();
+			account.updateToHTML();
+			hasNewRecord |= account.hasNewRecord();
+		}
+		if (hasNewRecord) {
+			Tray.getInstance().iconDisplayMessage("New submissions fetched.", generateMessage());
+			Tray.getInstance().startFlickering();
+		} else if (isForceShowMessage) {
+			Tray.getInstance().iconDisplayMessage("No new submissions.", generateMessage());
+		}
+	}
+	
 	private String generateMessage() {
 		String message = new String();
 		Iterator<Account> iter = _accountList.iterator();
@@ -65,18 +82,7 @@ public class AccountManager {
 	public void startMonitoring() {
 		TimerTask timerTaskInstance = new TimerTask() {
 			public void run() {
-				Iterator<Account> iter = _accountList.iterator();
-				boolean hasNewRecord = false;
-				while (iter.hasNext()) {
-					Account account = iter.next();
-					account.updateAll();
-					account.updateToHTML();
-					hasNewRecord |= account.hasNewRecord();
-				}
-				if (hasNewRecord) {
-					Tray.getInstance().iconDisplayMessage("New submissions fetched", generateMessage());
-					Tray.getInstance().startFlickering();
-				}
+				updateAll(false);
 			}
 		};
 		Tray.getInstance().initializeTray();

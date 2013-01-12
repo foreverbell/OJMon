@@ -73,6 +73,17 @@ public class Tray {
 		return exitMenuItem;
 	}
 	
+	private MenuItem createForceUpdateMenu() {
+		MenuItem updateMenuItem = new MenuItem("Force update");
+		ActionListener menuListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AccountManager.getInstance().updateAll(true);
+			}
+		};
+		updateMenuItem.addActionListener(menuListener);
+		return updateMenuItem;
+	}
+	
 	private MenuItem createAccountBrowseMenu(final Account account) {
 		MenuItem accountMenuItem = new MenuItem(account.getAccountName());
 		ActionListener menuListener = new ActionListener() {
@@ -98,6 +109,8 @@ public class Tray {
 			for (Account account : AccountManager.getInstance().getAllAccount()) {
 				popup.add(createAccountBrowseMenu(account));
 			}
+			popup.addSeparator();
+			popup.add(createForceUpdateMenu());
 			popup.addSeparator();
 			popup.add(createExitMenu());
 	
