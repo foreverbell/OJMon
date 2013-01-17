@@ -58,45 +58,8 @@ public class Tray {
 		_isFlickering = false;
 	}
 	
-	public void iconDisplayMessage(String title, String tooltip) {
+	public void DisplayMessage(String title, String tooltip) {
 		_trayIcon.displayMessage(title, tooltip, TrayIcon.MessageType.INFO);
-	}
-	
-	private MenuItem createExitMenu() {
-		MenuItem exitMenuItem = new MenuItem("Exit");
-		ActionListener menuListener = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		};
-		exitMenuItem.addActionListener(menuListener);
-		return exitMenuItem;
-	}
-	
-	private MenuItem createForceUpdateMenu() {
-		MenuItem updateMenuItem = new MenuItem("Force update");
-		ActionListener menuListener = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AccountManager.getInstance().updateAll(true);
-			}
-		};
-		updateMenuItem.addActionListener(menuListener);
-		return updateMenuItem;
-	}
-	
-	private MenuItem createAccountBrowseMenu(final Account account) {
-		MenuItem accountMenuItem = new MenuItem(account.getAccountName());
-		ActionListener menuListener = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					Desktop.getDesktop().browse(new URI(account.getAccountRecordFilePath()));
-				} catch (Exception ee) { 
-					Logger.printlnError(ee);
-				}
-			}
-		};
-		accountMenuItem.addActionListener(menuListener);
-		return accountMenuItem;		
 	}
 
 	public void initializeTray() {
@@ -107,12 +70,12 @@ public class Tray {
 		
 			PopupMenu popup = new PopupMenu();
 			for (Account account : AccountManager.getInstance().getAllAccount()) {
-				popup.add(createAccountBrowseMenu(account));
+				popup.add(new MenuAccountBrowse(account));
 			}
 			popup.addSeparator();
-			popup.add(createForceUpdateMenu());
+			popup.add(new MenuForceUpdate());
 			popup.addSeparator();
-			popup.add(createExitMenu());
+			popup.add(new MenuExit());
 	
 			ActionListener actionListener = new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {

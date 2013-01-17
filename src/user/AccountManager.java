@@ -60,10 +60,10 @@ public class AccountManager {
 			hasNewRecord |= account.hasNewRecord();
 		}
 		if (hasNewRecord) {
-			Tray.getInstance().iconDisplayMessage("New submissions fetched.", generateMessage());
+			Tray.getInstance().DisplayMessage("New submissions fetched.", generateMessage());
 			Tray.getInstance().startFlickering();
 		} else if (isForceShowMessage) {
-			Tray.getInstance().iconDisplayMessage("No new submissions.", generateMessage());
+			Tray.getInstance().DisplayMessage("No new submissions.", generateMessage());
 		}
 	}
 	

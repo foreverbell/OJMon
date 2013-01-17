@@ -23,7 +23,6 @@ public class HTMLLocalTextWriter {
 
 	private Account _bindAccount;
 
-	
 	private String HTMLtdWrapper(String str) {
 		return "<td>" + str + "</td>";
 	}
