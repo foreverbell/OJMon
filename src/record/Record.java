@@ -7,22 +7,22 @@ import status.Status;
 public class Record implements Comparable<Record> {
 
 	private String _bindOJName;
-	private int _runId;
+	private Integer _runId;
 	private Status _status;
 	private String _userName;
 	private String _nickName;
 	private String _probId;
 	private Date _submitTime;
 	private String _language;
-	private int _timeUsage;
-	private int _memoryUsage;
-	private int _codeLength;
+	private Integer _timeUsage;
+	private Integer _memoryUsage;
+	private Integer _codeLength;
 
 	public String getBindOJName() {
 		return _bindOJName;
 	}
 	
-	public int getRunId() {
+	public Integer getRunId() {
 		return _runId;
 	}
 	
@@ -50,15 +50,15 @@ public class Record implements Comparable<Record> {
 		return _language;
 	}
 	
-	public int getTimeUsage() {
+	public Integer getTimeUsage() {
 		return _timeUsage;
 	}
 	
-	public int getMemoryUsage() {
+	public Integer getMemoryUsage() {
 		return _memoryUsage;
 	}
 	
-	public int getCodeLength() {
+	public Integer getCodeLength() {
 		return _codeLength;
 	}
 
@@ -75,9 +75,9 @@ public class Record implements Comparable<Record> {
 			String probId,
 			Date submitTime,
 			String language,
-			int timeUsage,
-			int memoryUsage,
-			int codeLength) {
+			Integer timeUsage,
+			Integer memoryUsage,
+			Integer codeLength) {
 		
 		_bindOJName = OJName;
 		_runId = runId;

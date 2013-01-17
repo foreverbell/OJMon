@@ -25,14 +25,14 @@ public class Account {
 		return _userList.toArray(new User[0]);
 	}
 
-	public User createUser(OJ attachedOJ, String userName) {
-		User user = new User(attachedOJ, userName);
+	public User createUser(OJ bindOJ, String userName) {
+		User user = new User(bindOJ, userName);
 		if (!_userList.add(user)) return null;
 		return user;
 	}
 	
-	public User createNullUser(OJ attachedOJ) {
-		User user = new NullUser(attachedOJ);
+	public User createNullUser(OJ bindOJ) {
+		User user = new NullUser(bindOJ);
 		if (!_userList.add(user)) return null;
 		return user;
 	}
@@ -54,13 +54,13 @@ public class Account {
 		return false;
 	}
 	
-	public int getNewRecordCnt() {
-		int newRecordCnt = 0;
+	public int getNewRecordCount() {
+		int newRecordCount = 0;
 		Iterator<User> iter = _userList.iterator();
 		while (iter.hasNext()) {
-			newRecordCnt += iter.next().getNewRecordCnt();
+			newRecordCount += iter.next().getNewRecordCount();
 		}
-		return newRecordCnt;
+		return newRecordCount;
 	}
 	
 	public void clearNewRecordFlag() {
@@ -70,7 +70,7 @@ public class Account {
 		}
 	}
 	
-	public void updateToHTML() {
+	public void writeToHTML() {
 		_HTMLWriter.writeToHTML();
 	}
 	

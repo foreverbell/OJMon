@@ -9,9 +9,8 @@ import tray.Tray;
 
 public class AccountManager {
 
-	private static final int UPDATE_INTERVAL = 120000;
+	private static final int UPDATE_INTERVAL = 120000; // MillionSeconds
 	private static final AccountManager _instance = new AccountManager();
-	private boolean _isLocked = false;
 	
 	public static AccountManager getInstance() {
 		return _instance;
@@ -34,9 +33,10 @@ public class AccountManager {
 		return _accountList.toArray(new Account[0]);
 	}
 
+	/**
+	 * Creating an account after startMonitoring has been called is forbidden.
+	 */
 	public Account createAccount(String accountName) {
-		// Creating an account after startMonitoring has been called is forbidden.
-		if (_isLocked) return null;
 		Account account = new Account(accountName);
 		if (!_accountList.add(account)) return null;
 		return account;
@@ -56,27 +56,15 @@ public class AccountManager {
 		while (iter.hasNext()) {
 			Account account = iter.next();
 			account.updateAll();
-			account.updateToHTML();
+			account.writeToHTML();
 			hasNewRecord |= account.hasNewRecord();
 		}
 		if (hasNewRecord) {
 			Tray.getInstance().DisplayMessage("New submissions fetched.", generateMessage());
 			Tray.getInstance().startFlickering();
 		} else if (isForceShowMessage) {
-			Tray.getInstance().DisplayMessage("No new submissions.", generateMessage());
+			Tray.getInstance().DisplayMessage("No new submissions.", null);
 		}
-	}
-	
-	private String generateMessage() {
-		String message = new String();
-		Iterator<Account> iter = _accountList.iterator();
-		while (iter.hasNext()) {
-			Account account = iter.next();
-			if (account.hasNewRecord()) {
-				message += account.getAccountName() + " fetched " + Integer.valueOf(account.getNewRecordCnt()).toString() + " submission(s).\n";
-			}		
-		}
-		return message;
 	}
 
 	public void startMonitoring() {
@@ -86,9 +74,21 @@ public class AccountManager {
 			}
 		};
 		Tray.getInstance().initializeTray();
-		_isLocked = true;
 		Timer tmr = new Timer();
 		tmr.schedule(timerTaskInstance, 0, UPDATE_INTERVAL);		
+	}
+	
+	
+	private String generateMessage() {
+		String message = new String();
+		Iterator<Account> iter = _accountList.iterator();
+		while (iter.hasNext()) {
+			Account account = iter.next();
+			if (account.hasNewRecord()) {
+				message += String.format("%s fetched %d submissions.\n", account.getAccountName(), account.getNewRecordCount());
+			}		
+		}
+		return message;
 	}
 	
 	private AccountManager() { }

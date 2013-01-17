@@ -16,7 +16,7 @@ public class User implements INullable {
 	protected int _maximumSize = RECORD_MAXIMUM_SIZE;
 	private TreeSet<Record> _userRecordList = new TreeSet<Record>();
 	private boolean _hasNewRecord;
-	private int _newRecordCnt;
+	private int _newRecordCount;
 	
 	public boolean isNull() {
 		return false;
@@ -56,27 +56,27 @@ public class User implements INullable {
 	}
 	
 	public int update() {
-		int updatedCnt = 0;
+		int updatedCount = 0;
 		if (_userRecordList.size() == 0) {
-			updatedCnt = _bindOJ.updateUserRecords(this, _maximumSize, 0);
+			updatedCount = _bindOJ.updateUserRecords(this, _maximumSize, 0);
 		} else {
-			updatedCnt = _bindOJ.updateUserRecords(this, _maximumSize, _userRecordList.first().getRunId() + 1);
+			updatedCount = _bindOJ.updateUserRecords(this, _maximumSize, _userRecordList.first().getRunId() + 1);
 		}
-		if (updatedCnt > 0) _hasNewRecord = true;
-		_newRecordCnt += updatedCnt;
-		return updatedCnt;
+		if (updatedCount > 0) _hasNewRecord = true;
+		_newRecordCount += updatedCount;
+		return updatedCount;
 	}
 	
 	public boolean hasNewRecord() {
 		return _hasNewRecord;
 	}
 	
-	public int getNewRecordCnt() {
-		return _newRecordCnt;
+	public int getNewRecordCount() {
+		return _newRecordCount;
 	}
 	
 	public void clearNewRecordFlag() {
-		_newRecordCnt = 0;
+		_newRecordCount = 0;
 		_hasNewRecord = false;
 	}
 	

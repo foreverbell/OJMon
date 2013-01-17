@@ -29,15 +29,15 @@ public class HTMLLocalTextWriter {
 	
 	private String toHTMLCode(Record r, boolean isEvenRow) {
 		String OJSession = HTMLtdWrapper(r.getBindOJName());
-		String runIdSession = HTMLtdWrapper(Integer.valueOf(r.getRunId()).toString());
+		String runIdSession = HTMLtdWrapper(r.getRunId().toString());
 		// String userNameSession = HTMLtdWrapper(r.getUserName());
 		String nickNameSession = HTMLtdWrapper(r.getNickName());
 		String probIdSession = HTMLtdWrapper(r.getProbId());
 		String statusSession = HTMLtdWrapper("<font color=" + (r.getStatus().isPassed() ? "green" : "blue") + ">" + (r.getStatus().isPassed() ? "<strong>" : "") + r.getStatus().statusToString() + (r.getStatus().isPassed() ? "</strong>" : "") + "</font>");
-		String memorySession = HTMLtdWrapper(r.getMemoryUsage() == OJ.OJ_INVALID_INFO ? "n/a" : Integer.valueOf(r.getMemoryUsage()).toString() + "k");
-		String timeSession = HTMLtdWrapper(r.getTimeUsage() == OJ.OJ_INVALID_INFO ? "n/a" : Integer.valueOf(r.getTimeUsage()).toString() + "ms");
+		String memorySession = HTMLtdWrapper(r.getMemoryUsage() == OJ.OJ_INVALID_INFO ? "n/a" : r.getMemoryUsage().toString() + "k");
+		String timeSession = HTMLtdWrapper(r.getTimeUsage() == OJ.OJ_INVALID_INFO ? "n/a" : r.getTimeUsage().toString() + "ms");
 		String langSession = HTMLtdWrapper(r.getLanguage());
-		String codeLenSession = HTMLtdWrapper(r.getCodeLength() == OJ.OJ_INVALID_INFO ? "n/a" : Integer.valueOf(r.getCodeLength()).toString() + "b");
+		String codeLenSession = HTMLtdWrapper(r.getCodeLength() == OJ.OJ_INVALID_INFO ? "n/a" : r.getCodeLength().toString() + "b");
 		String submitTimeSession = HTMLtdWrapper(DateFormat.getDateTimeInstance().format(r.getSubmitTime()));
 		
 		return "<tr class=" + (isEvenRow ? "row1" : "row2") + ">"
