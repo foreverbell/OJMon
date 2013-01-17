@@ -11,7 +11,7 @@ public class User implements INullable {
 	
 	public static final int RECORD_MAXIMUM_SIZE = 25;
 	
-	protected OJ _attachedOJ;
+	protected OJ _bindOJ;
 	protected String _userName;
 	protected int _maximumSize = RECORD_MAXIMUM_SIZE;
 	private TreeSet<Record> _userRecordList = new TreeSet<Record>();
@@ -26,8 +26,8 @@ public class User implements INullable {
 		return _userRecordList.toArray(new Record[0]);
 	}
 	
-	public OJ getAttachedOJ() {
-		return _attachedOJ;
+	public OJ getBindOJ() {
+		return _bindOJ;
 	}
 	
 	public String getUserName() {
@@ -58,9 +58,9 @@ public class User implements INullable {
 	public int update() {
 		int updatedCnt = 0;
 		if (_userRecordList.size() == 0) {
-			updatedCnt = _attachedOJ.updateUserRecords(this, _maximumSize, 0);
+			updatedCnt = _bindOJ.updateUserRecords(this, _maximumSize, 0);
 		} else {
-			updatedCnt = _attachedOJ.updateUserRecords(this, _maximumSize, _userRecordList.first().getRunId() + 1);
+			updatedCnt = _bindOJ.updateUserRecords(this, _maximumSize, _userRecordList.first().getRunId() + 1);
 		}
 		if (updatedCnt > 0) _hasNewRecord = true;
 		_newRecordCnt += updatedCnt;
@@ -80,8 +80,8 @@ public class User implements INullable {
 		_hasNewRecord = false;
 	}
 	
-	public User(OJ attachedOJ, String userName) {
-		_attachedOJ = attachedOJ;
+	public User(OJ bindOJ, String userName) {
+		_bindOJ = bindOJ;
 		_userName = userName;
 	}
 }

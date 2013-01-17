@@ -6,7 +6,7 @@ import status.Status;
 
 public class Record implements Comparable<Record> {
 
-	private String _attachedOJName;
+	private String _bindOJName;
 	private int _runId;
 	private Status _status;
 	private String _userName;
@@ -18,8 +18,8 @@ public class Record implements Comparable<Record> {
 	private int _memoryUsage;
 	private int _codeLength;
 
-	public String getAttachedOJName() {
-		return _attachedOJName;
+	public String getBindOJName() {
+		return _bindOJName;
 	}
 	
 	public int getRunId() {
@@ -79,7 +79,7 @@ public class Record implements Comparable<Record> {
 			int memoryUsage,
 			int codeLength) {
 		
-		_attachedOJName = OJName;
+		_bindOJName = OJName;
 		_runId = runId;
 		_status = status;
 		_userName = userName;
@@ -93,7 +93,6 @@ public class Record implements Comparable<Record> {
 	}
 
 	public int compareTo(Record arg) {
-		// Assume this._attachedOJName.equals(arg._attachedOJName)) = true.
 		if (this._runId == arg._runId) return 0;
 		return this._runId < arg._runId ? 1 : -1;
 	}

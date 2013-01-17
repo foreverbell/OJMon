@@ -29,7 +29,7 @@ public class HTMLLocalTextWriter {
 	}
 	
 	private String toHTMLCode(Record r, boolean isEvenRow) {
-		String OJSession = HTMLtdWrapper(r.getAttachedOJName());
+		String OJSession = HTMLtdWrapper(r.getBindOJName());
 		String runIdSession = HTMLtdWrapper(Integer.valueOf(r.getRunId()).toString());
 		// String userNameSession = HTMLtdWrapper(r.getUserName());
 		String nickNameSession = HTMLtdWrapper(r.getNickName());

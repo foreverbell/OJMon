@@ -10,7 +10,7 @@ public class NullUser extends User {
 		return true;
 	}
 	
-	public NullUser(OJ attachedOJ) { 
-		super(attachedOJ, NULLUSER_NAME);
+	public NullUser(OJ bindOJ) { 
+		super(bindOJ, NULLUSER_NAME);
 	}
 }
