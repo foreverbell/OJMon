@@ -1,17 +1,11 @@
 
-import oj.*;
-import user.Account;
+import config.Config;
 import user.AccountManager;
 
 public class Main {
 
 	public static void main(String[] args) {
-		Account account = AccountManager.getInstance().createAccount("Codeforces");
-		account.createNullUser(new OJCodeforces());
-		
-		Account account2 = AccountManager.getInstance().createAccount("POJ");
-		account2.createNullUser(new OJPOJ());
-		
+		Config.getInstance().initializeConfig();
 		AccountManager.getInstance().startMonitoring();
 	}
 }

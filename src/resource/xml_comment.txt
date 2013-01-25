@@ -1,0 +1,19 @@
+
+	OJMon 配置文件编写说明：
+	请在标签 <accounts> 中加入新的用户，格式如下：
+		<account name="??">
+			<user oj="??" id="??"> </user>
+			...
+		</account>
+	Account Name 自行指定，不要有相同的名称。
+	User ID 为用户在该 OJ 的名称，关联于用户的提交记录 URL。如果需要监视整个 OJ，请将其置为空。
+	User OJ 为该 OJ 名称。
+	目前支持的 OJ 名称列表如下，区分大小写，括号为详细说明：
+		Codeforces
+		HDOJ
+		HUSTVJ （HUST Virtual Judge）
+		HUSTVC （HUST Virtual Contest，请在 <user> 标签内加入 <contestid> 标签指定比赛编号。）
+		POJ
+		SPOJ
+		Ural
+		ZOJ

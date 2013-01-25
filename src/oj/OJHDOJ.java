@@ -11,12 +11,14 @@ import user.User;
 
 public class OJHDOJ extends OJ {
 
+	public static final String OJNAME = "HDOJ";
+	
 	public EOJ getOJCode() {
 		return EOJ.HDOJ;
 	}
 
 	public String getOJName() {
-		return "HDOJ";
+		return OJNAME;
 	}
 	
 	protected ArrayList<Record> getUserRecord(String strHTML, int maximumSize, int untilRunId, int afterRunId) {
@@ -66,13 +68,13 @@ public class OJHDOJ extends OJ {
 		return result;
 	}
 
-	protected String getUserSubmissionURL(User user, int maximumSize, int lastRunId, int page) {
+	protected String getUserSubmissionURL(User user, Integer maximumSize, Integer lastRunId, Integer page) {
 		String userSession = "user=" + user.getUserName();
-		String firstSession = "first=" + (lastRunId == OJ_INVALID_INFO ? "" : Integer.valueOf(lastRunId - 1).toString());
+		String firstSession = "first=" + (lastRunId == OJ_INVALID_INFO ? "" : (lastRunId - 1));
 		return "http://acm.hdu.edu.cn/status.php?" + userSession + "&" + firstSession;
 	}
 
-	public OJHDOJ() { 
+	protected OJHDOJ() { 
 		_encoding = "gb2312";
 	}
 

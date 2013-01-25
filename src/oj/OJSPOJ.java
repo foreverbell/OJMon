@@ -11,12 +11,14 @@ import user.User;
 
 public class OJSPOJ extends OJ {
 
+	public static final String OJNAME = "SPOJ";
+	
 	public EOJ getOJCode() {
 		return EOJ.SPOJ;
 	}
 
 	public String getOJName() {
-		return "SPOJ";
+		return OJNAME;
 	}
 	
 	protected ArrayList<Record> getUserRecord(String strHTML, int maximumSize, int untilRunId, int afterRunId) {
@@ -69,10 +71,12 @@ public class OJSPOJ extends OJ {
 		return result;
 	}
 
-	protected String getUserSubmissionURL(User user, int maximumSize, int lastRunId, int page) {
+	protected String getUserSubmissionURL(User user, Integer maximumSize, Integer lastRunId, Integer page) {
 		if (page > 6) return null;
 		String userSession = (user.isNull() ? "" : "/" + user.getUserName());
-		String pageSession = "/start=" + Integer.valueOf((page - 1) * 20).toString();
+		String pageSession = "/start=" + ((page - 1) * 20);
 		return "http://www.spoj.com/status" + userSession + pageSession;
 	}
+	
+	protected OJSPOJ() { }
 }

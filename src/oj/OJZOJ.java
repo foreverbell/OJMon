@@ -11,12 +11,14 @@ import user.User;
 
 public class OJZOJ extends OJ {
 
+	public static final String OJNAME = "ZOJ";
+	
 	public EOJ getOJCode() {
 		return EOJ.ZOJ;
 	}
 	
 	public String getOJName() {
-		return "ZOJ";
+		return OJNAME;
 	}
 
 	protected ArrayList<Record> getUserRecord(String strHTML, int maximumSize, int untilRunId, int afterRunId) {
@@ -63,9 +65,11 @@ public class OJZOJ extends OJ {
 		return result;
 	}
 
-	protected String getUserSubmissionURL(User user, int maximumSize, int lastRunId, int page) {
+	protected String getUserSubmissionURL(User user, Integer maximumSize, Integer lastRunId, Integer page) {
 		String handleSession = "handle=" + user.getUserName();
-		String lastIdSession = "lastId=" + Integer.valueOf(lastRunId).toString();
+		String lastIdSession = "lastId=" + lastRunId;
 		return "http://acm.zju.edu.cn/onlinejudge/showRuns.do?contestId=1&" + handleSession + "&" + lastIdSession;
 	}
+	
+	protected OJZOJ() { }
 }

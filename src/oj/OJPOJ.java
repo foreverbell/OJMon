@@ -9,13 +9,15 @@ import status.Status;
 import user.User;
 
 public class OJPOJ extends OJ {
-
+	
+	public static final String OJNAME = "POJ";
+	
 	public EOJ getOJCode() {
 		return EOJ.POJ;
 	}
 	
 	public String getOJName() {
-		return "POJ";
+		return OJNAME;
 	}
 	
 	protected ArrayList<Record> getUserRecord(String strHTML, int maximumSize, int untilRunId, int afterRunId) {
@@ -74,10 +76,12 @@ public class OJPOJ extends OJ {
 		return result;
 	}
 
-	protected String getUserSubmissionURL(User user, int maximumSize, int lastRunId, int page) {
+	protected String getUserSubmissionURL(User user, Integer maximumSize, Integer lastRunId, Integer page) {
 		String userSession = "user_id=" + user.getUserName();
-		String topSession = "top=" + (lastRunId == OJ_INVALID_INFO ? "" : Integer.valueOf(lastRunId).toString());
-		String sizeSession = "size=" + (maximumSize == OJ_INVALID_INFO ? "" : Integer.valueOf(maximumSize + 5).toString());
+		String topSession = "top=" + (lastRunId == OJ_INVALID_INFO ? "" : lastRunId);
+		String sizeSession = "size=" + (maximumSize == OJ_INVALID_INFO ? "" : (maximumSize + 5));
 		return "http://poj.org/status?" + userSession + "&" + topSession + "&" + sizeSession;
 	}
+	
+	protected OJPOJ() { }
 }

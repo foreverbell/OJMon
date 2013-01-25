@@ -11,12 +11,14 @@ import user.User;
 
 public class OJHUST extends OJ {
 
+	public static final String OJNAME = "HUSTVJ";
+	
 	public EOJ getOJCode() {
 		return EOJ.HUST;
 	}
 
 	public String getOJName() {
-		return "HUSTVJ";
+		return OJNAME;
 	}
 
 	protected ArrayList<Record> getUserRecord(String strHTML, int maximumSize, int untilRunId, int afterRunId) {
@@ -71,9 +73,9 @@ public class OJHUST extends OJ {
 		return result;
 	}
 
-	protected String getUserSubmissionURL(User user, int maximumSize, int lastRunId, int page) {
+	protected String getUserSubmissionURL(User user, Integer maximumSize, Integer lastRunId, Integer page) {
 		page -= 1;
-		return "http://acm.hust.edu.cn:8080/judge/problem/fetchStatus.action?sEcho=1&iColumns=15&sColumns=&iDisplayStart=" + Integer.valueOf(page * maximumSize).toString() + "&iDisplayLength=" + Integer.valueOf(maximumSize).toString() + "&mDataProp_0=0&mDataProp_1=1&mDataProp_2=2&mDataProp_3=3&mDataProp_4=4&mDataProp_5=5&mDataProp_6=6&mDataProp_7=7&mDataProp_8=8&mDataProp_9=9&mDataProp_10=10&mDataProp_11=11&mDataProp_12=12&mDataProp_13=13&mDataProp_14=14&un=" + user.getUserName() + "&OJId=all&probNum=&res=0";
+		return "http://acm.hust.edu.cn:8080/judge/problem/fetchStatus.action?sEcho=1&iColumns=15&sColumns=&iDisplayStart=" + (page * maximumSize) + "&iDisplayLength=" + maximumSize + "&mDataProp_0=0&mDataProp_1=1&mDataProp_2=2&mDataProp_3=3&mDataProp_4=4&mDataProp_5=5&mDataProp_6=6&mDataProp_7=7&mDataProp_8=8&mDataProp_9=9&mDataProp_10=10&mDataProp_11=11&mDataProp_12=12&mDataProp_13=13&mDataProp_14=14&un=" + user.getUserName() + "&OJId=all&probNum=&res=0";
 	}
 	
 	protected Date parseDate(String str) {
@@ -81,4 +83,6 @@ public class OJHUST extends OJ {
 		ret.setTime(Long.valueOf(str));
 		return ret;
 	}
+	
+	protected OJHUST() { }
 }

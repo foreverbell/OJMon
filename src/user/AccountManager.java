@@ -9,7 +9,6 @@ import tray.Tray;
 
 public class AccountManager {
 
-	private static final int UPDATE_INTERVAL = 120000; // MillionSeconds
 	private static final AccountManager _instance = new AccountManager();
 	
 	public static AccountManager getInstance() {
@@ -17,6 +16,7 @@ public class AccountManager {
 	}
 	
 	private HashSet<Account> _accountList = new HashSet<Account>();
+	private int _updateInterval; // in MillionSeconds
 	
 	public Account getAccount(String accountName) {
 		Iterator<Account> iter = _accountList.iterator();
@@ -67,6 +67,10 @@ public class AccountManager {
 		}
 	}
 
+	public void setUpdateInterval(int updateInterval) {
+		_updateInterval = updateInterval;
+	}
+	
 	public void startMonitoring() {
 		TimerTask timerTaskInstance = new TimerTask() {
 			public void run() {
@@ -75,7 +79,7 @@ public class AccountManager {
 		};
 		Tray.getInstance().initializeTray();
 		Timer tmr = new Timer();
-		tmr.schedule(timerTaskInstance, 0, UPDATE_INTERVAL);		
+		tmr.schedule(timerTaskInstance, 0, _updateInterval);		
 	}
 	
 	

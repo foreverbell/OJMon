@@ -14,12 +14,14 @@ import user.User;
 
 public class OJUral extends OJ {
 
+	public static final String OJNAME = "Ural";
+	
 	public EOJ getOJCode() {
 		return EOJ.Ural;
 	}
 
 	public String getOJName() {
-		return "Ural";
+		return OJNAME;
 	}
 	
 	protected ArrayList<Record> getUserRecord(String strHTML, int maximumSize, int untilRunId, int afterRunId) {
@@ -71,10 +73,10 @@ public class OJUral extends OJ {
 		return result;
 	}
 
-	protected String getUserSubmissionURL(User user, int maximumSize, int lastRunId, int page) {
+	protected String getUserSubmissionURL(User user, Integer maximumSize, Integer lastRunId, Integer page) {
 		String authorSession = "author=" + user.getUserName();
-		String countSession = "count=" + Integer.valueOf(maximumSize + 5).toString();
-		String fromSession = "from=" + Integer.valueOf(lastRunId - 1).toString();
+		String countSession = "count=" + (maximumSize + 5);
+		String fromSession = "from=" + (lastRunId - 1);
 		return "http://acm.timus.ru/status.aspx?" + authorSession + "&" + countSession + "&" + fromSession;
 	}
 
@@ -85,4 +87,6 @@ public class OJUral extends OJ {
 			return onParseDateError(e);
 		}
 	}
+	
+	protected OJUral() { }
 }

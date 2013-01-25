@@ -5,5 +5,6 @@ tmp/
 *.swp
 *~.nib
 
-# Ignore generated html files.
+# Ignore generated html files and xml config files.
 *.html
+*.xml

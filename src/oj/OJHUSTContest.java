@@ -11,14 +11,16 @@ import user.User;
 
 public class OJHUSTContest extends OJHUST {
 	
-	private int _contestId;
+	public static final String OJNAME = "HUSTVC";
+	
+	private Integer _contestID;
 	
 	public EOJ getOJCode() {
 		return EOJ.HUSTContest;
 	}
 
 	public String getOJName() {
-		return "HUSTVC";
+		return OJNAME;
 	}
 
 	protected ArrayList<Record> getUserRecord(String strHTML, int maximumSize, int untilRunId, int afterRunId) {
@@ -73,12 +75,12 @@ public class OJHUSTContest extends OJHUST {
 		return result;
 	}
 
-	protected String getUserSubmissionURL(User user, int maximumSize, int lastRunId, int page) {
+	protected String getUserSubmissionURL(User user, Integer maximumSize, Integer lastRunId, Integer page) {
 		page -= 1;
-		return "http://acm.hust.edu.cn:8080/judge/contest/fetchStatus.action?" + "cid=" + Integer.valueOf(_contestId).toString() + "&sEcho=1&iColumns=13&sColumns=&iDisplayStart=" + Integer.valueOf(page * maximumSize).toString() + "&iDisplayLength=" + Integer.valueOf(maximumSize).toString() + "&mDataProp_0=0&mDataProp_1=1&mDataProp_2=2&mDataProp_3=3&mDataProp_4=4&mDataProp_5=5&mDataProp_6=6&mDataProp_7=7&mDataProp_8=8&mDataProp_9=9&mDataProp_10=10&mDataProp_11=11&mDataProp_12=12&un=" + user.getUserName() + "&num=-&res=0";
+		return "http://acm.hust.edu.cn:8080/judge/contest/fetchStatus.action?" + "cid=" + _contestID + "&sEcho=1&iColumns=13&sColumns=&iDisplayStart=" + (page * maximumSize) + "&iDisplayLength=" + maximumSize + "&mDataProp_0=0&mDataProp_1=1&mDataProp_2=2&mDataProp_3=3&mDataProp_4=4&mDataProp_5=5&mDataProp_6=6&mDataProp_7=7&mDataProp_8=8&mDataProp_9=9&mDataProp_10=10&mDataProp_11=11&mDataProp_12=12&un=" + user.getUserName() + "&num=-&res=0";
 	}
 	
-	public OJHUSTContest(int contestId) {
-		_contestId = contestId;
+	protected OJHUSTContest(Integer contestID) {
+		_contestID = contestID;
 	}
 }

@@ -14,12 +14,14 @@ import user.User;
 
 public class OJCodeforces extends OJ {
 
+	public static final String OJNAME = "Codeforces";
+	
 	public EOJ getOJCode() {
 		return EOJ.Codeforces;
 	}
 
 	public String getOJName() {
-		return "Codeforces";
+		return OJNAME;
 	}
 	
 	protected ArrayList<Record> getUserRecord(String strHTML, int maximumSize, int untilRunId, int afterRunId) {
@@ -66,14 +68,14 @@ public class OJCodeforces extends OJ {
 		return result;
 	}
 
-	protected String getUserSubmissionURL(User user, int maximumSize, int lastRunId, int page) {
+	protected String getUserSubmissionURL(User user, Integer maximumSize, Integer lastRunId, Integer page) {
 		String basisURL = null;
 		if (user.isNull()) {
 			basisURL = "http://www.codeforces.com/problemset/status";
 		} else {
 			basisURL = "http://www.codeforces.com/submissions/" + user.getUserName();
 		}
-		String pageSession = "/page/" + Integer.valueOf(page).toString();
+		String pageSession = "/page/" + page;
 		return basisURL + pageSession;
 	}
 
@@ -84,4 +86,6 @@ public class OJCodeforces extends OJ {
 			return onParseDateError(e);
 		}
 	}
+	
+	protected OJCodeforces() { }
 }
