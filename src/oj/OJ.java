@@ -46,7 +46,9 @@ public abstract class OJ {
 				if (r.isNeedToRecord()) recordList.add(r);
 			}
 		} while (!isEndConditionHold(recordList, maximumSize, untilRunId));
-		if (recordList.get(recordList.size() - 1).getRunId() <= untilRunId) recordList.remove(recordList.size() - 1);
+		if (!recordList.isEmpty()) {
+			if (recordList.get(recordList.size() - 1).getRunId() <= untilRunId) recordList.remove(recordList.size() - 1);
+		}
 		return user.mergeRecords(recordList, maximumSize);
 	}
 	
