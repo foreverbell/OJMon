@@ -93,7 +93,6 @@ public class Record implements Comparable<Record> {
 	}
 
 	public int compareTo(Record arg) {
-		if (this._runId == arg._runId) return 0;
-		return this._runId < arg._runId ? 1 : -1;
+		return - this._runId.compareTo(arg._runId);
 	}
 }

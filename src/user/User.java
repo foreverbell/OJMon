@@ -60,7 +60,7 @@ public class User implements INullable {
 		if (_userRecordList.size() == 0) {
 			updatedCount = _bindOJ.updateUserRecords(this, _maximumSize, 0);
 		} else {
-			updatedCount = _bindOJ.updateUserRecords(this, _maximumSize, _userRecordList.first().getRunId() + 1);
+			updatedCount = _bindOJ.updateUserRecords(this, _maximumSize, _userRecordList.first().getRunId());
 		}
 		if (updatedCount > 0) _hasNewRecord = true;
 		_newRecordCount += updatedCount;
