@@ -92,6 +92,8 @@ public abstract class OJ {
 			return new OJUral();
 		} else if (OJName.equals(OJZOJ.OJNAME)) {
 			return new OJZOJ();
+		} else if (OJName.equals(OJBZOJ.OJNAME)) {
+			return new OJBZOJ();
 		} else {
 			return null;
 		}

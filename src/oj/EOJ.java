@@ -9,4 +9,5 @@ public enum EOJ {
 	Codeforces,
 	HUST,
 	HUSTContest,
+	BZOJ,
 }
